@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>For Saloni 💘 — Plan B (Recovery Edition)</title>
+  <meta name="theme-color" content="#ff5ca8" />
+  <style>
+    :root{
+      --bg1:#ffd0e6; --bg2:#ffb6d9; --card:#ffffffee;
+      --ink:#1b1b1f; --muted:#6b6b76;
+      --pink:#ff4fa3; --pink2:#ff7abf;
+      --green:#18c56e; --shadow: 0 18px 55px rgba(0,0,0,.14);
+      --radius: 22px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--ink);
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:18px 14px 26px;
+      background:
+        radial-gradient(1200px 650px at 20% 10%, #fff 0%, transparent 60%),
+        radial-gradient(900px 500px at 90% 30%, rgba(255,255,255,.75) 0%, transparent 65%),
+        linear-gradient(160deg, var(--bg1), var(--bg2));
+      overflow-x:hidden;
+    }
+    .hearts{position:fixed; inset:0; pointer-events:none; opacity:.18;
+      background-image:
+        radial-gradient(circle at 10% 20%, rgba(255,255,255,.9) 0 6px, transparent 7px),
+        radial-gradient(circle at 18% 60%, rgba(255,255,255,.9) 0 5px, transparent 6px),
+        radial-gradient(circle at 78% 30%, rgba(255,255,255,.9) 0 6px, transparent 7px),
+        radial-gradient(circle at 90% 70%, rgba(255,255,255,.9) 0 5px, transparent 6px);
+      filter: blur(.3px);
+    }
+    .wrap{width:min(430px, 100%); position:relative}
+    .badge-row{display:flex; align-items:center; justify-content:space-between; margin:0 2px 10px; gap:10px;}
+    .chip{display:inline-flex; align-items:center; gap:8px; padding:10px 12px; border-radius:999px;
+      background:rgba(255,255,255,.6); backdrop-filter: blur(8px); border:1px solid rgba(255,255,255,.7);
+      box-shadow: 0 10px 24px rgba(0,0,0,.08); font-weight:650; letter-spacing:.2px; font-size:13px; color:#b30057; white-space:nowrap;}
+    .sig{color: rgba(0,0,0,.55); font-weight:650; letter-spacing:.2px; white-space:nowrap;}
+    .card{background:var(--card); border:1px solid rgba(255,255,255,.8); border-radius: var(--radius); box-shadow: var(--shadow);
+      padding:16px 16px 18px; position:relative; overflow:hidden;}
+    .progress{height:10px; background: rgba(0,0,0,.07); border-radius: 999px; overflow:hidden; margin:4px 0 14px;}
+    .bar{height:100%; width:0%; background: linear-gradient(90deg, var(--pink), var(--pink2)); border-radius:999px; transition: width .35s ease;}
+    h1{margin:2px 0 6px; font-size: 28px; line-height:1.08; letter-spacing:-.6px;}
+    p{margin:6px 0 0; color:var(--muted); line-height:1.35}
+    .step{display:none; animation: pop .35s ease;}
+    .step.active{display:block}
+    @keyframes pop{from{transform:translateY(8px); opacity:0} to{transform:translateY(0); opacity:1}}
+    .btnrow{display:flex; gap:10px; margin-top:14px}
+    .btn{width:100%; border:0; padding:14px 14px; border-radius: 18px; font-size:16px; font-weight:800; letter-spacing:.2px;
+      cursor:pointer; color:#fff; box-shadow: 0 16px 35px rgba(255,79,163,.25);
+      background: linear-gradient(180deg, var(--pink), #ff2b90); transition: transform .08s ease; -webkit-tap-highlight-color: transparent;}
+    .btn:active{transform:scale(.99)}
+    .btn.secondary{background: rgba(0,0,0,.08); color: var(--ink); box-shadow:none; font-weight:800;}
+    .hint{margin-top:10px; font-size:13px; color: rgba(0,0,0,.55);}
+    .mini{font-size:12px; color: rgba(0,0,0,.5); margin-top:12px; text-align:center;}
+
+    .hugbox{margin-top:14px; border-radius: 18px; padding:14px; background: rgba(255,79,163,.09); border: 1px dashed rgba(255,79,163,.35);}
+    .meter{height:14px; border-radius:999px; background: rgba(0,0,0,.08); overflow:hidden; margin:10px 0 10px;}
+    .meter > div{height:100%; width:0%; background: linear-gradient(90deg, #ff4fa3, #ff7abf, #ffd0e6); transition: width .08s linear;}
+    .hold{user-select:none; border:0; width:100%; padding:16px 14px; border-radius: 18px; font-size:16px; font-weight:900; letter-spacing:.2px; color:#fff;
+      background: linear-gradient(180deg, #ff5ca8, #ff2b90); box-shadow: 0 16px 35px rgba(255,79,163,.25); -webkit-tap-highlight-color: transparent;}
+    .hold:active{transform:scale(.99)}
+    .hugmsg{margin-top:6px; font-weight:750; color:#b30057;}
+
+    .list{margin-top:12px; display:flex; flex-direction:column; gap:10px;}
+    .item{display:flex; gap:10px; align-items:flex-start; padding:12px 12px; border-radius:16px; background: rgba(0,0,0,.04); border:1px solid rgba(0,0,0,.06);}
+    .item input{margin-top:3px; transform: scale(1.2)}
+    .item strong{display:block; margin-bottom:2px}
+    .sub{font-size:13px; color:rgba(0,0,0,.58); line-height:1.25}
+    .donepill{margin-top:10px; display:inline-flex; align-items:center; gap:8px; padding:8px 10px; border-radius:999px; font-weight:800;
+      background: rgba(24,197,110,.13); color: #0a7b43; border:1px solid rgba(24,197,110,.25);}
+
+    .cupwrap{margin-top:14px; display:grid; grid-template-columns: 1fr; gap:12px;}
+    .cup{width:100%; aspect-ratio: 1.15 / 1; border-radius: 22px; background: rgba(0,0,0,.035); border:1px solid rgba(0,0,0,.07);
+      position:relative; overflow:hidden; display:flex; align-items:flex-end; justify-content:center; padding:14px;}
+    .liquid{position:absolute; left:14px; right:14px; bottom:14px; height:62%; border-radius: 18px;
+      background: linear-gradient(180deg, #c07a3a, #7a3f18); box-shadow: inset 0 10px 20px rgba(255,255,255,.15); transition: height .35s ease;}
+    .foam{position:absolute; left:18px; right:18px; bottom: calc(14px + 62% - 14px); height:16px; border-radius: 999px;
+      background: rgba(255,255,255,.6); opacity:.8; transition: bottom .35s ease, opacity .35s ease;}
+    .cup label{position:relative; z-index:2; font-weight:900; color: rgba(0,0,0,.7); text-align:center; padding:10px 12px; border-radius: 16px;
+      background: rgba(255,255,255,.7); border:1px solid rgba(255,255,255,.75); box-shadow: 0 10px 22px rgba(0,0,0,.06);}
+    .siprow{display:flex; gap:10px;}
+    .sipbtn{flex:1; border:0; padding:14px 14px; border-radius:18px; font-weight:900; font-size:16px; color:#fff;
+      background: linear-gradient(180deg, #19c56e, #0fb35f); box-shadow: 0 16px 35px rgba(24,197,110,.22); -webkit-tap-highlight-color: transparent;}
+    .sipbtn:active{transform:scale(.99)}
+    .sipbtn[disabled]{opacity:.55; box-shadow:none;}
+    .note{font-size:13px; color: rgba(0,0,0,.58); background: rgba(255,79,163,.08); border: 1px solid rgba(255,79,163,.18);
+      padding:10px 12px; border-radius:16px; line-height:1.25;}
+
+    .token{margin-top:14px; border-radius: 20px; padding:14px; background: linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,.65));
+      border:1px solid rgba(255,255,255,.8); position:relative; overflow:hidden;}
+    .code{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-weight:900; letter-spacing:.6px;
+      padding:10px 12px; border-radius: 16px; background: rgba(0,0,0,.06); border: 1px solid rgba(0,0,0,.08); display:inline-block; margin-top:8px;}
+    .small{margin-top:8px; font-size:13px; color: rgba(0,0,0,.58); line-height:1.25;}
+
+    canvas#confetti{position:fixed; inset:0; pointer-events:none; z-index:999;}
+  </style>
+</head>
+<body>
+  <div class="hearts" aria-hidden="true"></div>
+  <canvas id="confetti"></canvas>
+
+  <main class="wrap" role="main">
+    <div class="badge-row">
+      <div class="chip">For Saloni 🫶</div>
+      <div class="sig">— Sameer</div>
+    </div>
+
+    <section class="card">
+      <div class="progress" aria-label="progress"><div class="bar" id="bar"></div></div>
+
+      <div class="step active" id="s1">
+        <h1>Plan B: Recovery Valentine 💖</h1>
+        <p>You already said <strong>YES</strong> 😌 so now it’s officially <strong>comfort + care</strong> mode.</p>
+        <p class="hint">Tap next — I made this just for you (long‑distance edition).</p>
+        <div class="btnrow">
+          <button class="btn" id="go1">Let’s go ✨</button>
+        </div>
+        <div class="mini">Made with ❤️ from Sameer</div>
+      </div>
+
+      <div class="step" id="s2">
+        <h1>First… a long‑distance hug 🤍</h1>
+        <p>Press & hold for your hug. Don’t let go 😤</p>
+
+        <div class="hugbox">
+          <div class="meter" aria-label="hug meter"><div id="hugFill"></div></div>
+          <button class="hold" id="hugBtn" aria-label="hold for hug">Hold for hug 🫂</button>
+          <div class="hugmsg" id="hugMsg">Hug meter: 0%</div>
+        </div>
+
+        <div class="btnrow">
+          <button class="btn secondary" id="back2">Back</button>
+          <button class="btn" id="next2" disabled>Next 💗</button>
+        </div>
+        <div class="hint">Reach 100% to unlock the next step.</div>
+      </div>
+
+      <div class="step" id="s3">
+        <h1>Care plan ✅</h1>
+        <p>Sore throat = no cold stuff. So today we do the basics… properly.</p>
+
+        <div class="list" role="list">
+          <label class="item" role="listitem">
+            <input type="checkbox" class="care" value="Hot water" />
+            <div>
+              <strong>Hot / warm water</strong>
+              <div class="sub">Small sips through the day. (Yes I’ll nag you 😌)</div>
+            </div>
+          </label>
+
+          <label class="item" role="listitem">
+            <input type="checkbox" class="care" value="Meds" />
+            <div>
+              <strong>Meds on time</strong>
+              <div class="sub">Whatever you’re taking — no skipping.</div>
+            </div>
+          </label>
+
+          <label class="item" role="listitem">
+            <input type="checkbox" class="care" value="Rest" />
+            <div>
+              <strong>Rest</strong>
+              <div class="sub">Today your only job is to recover. That’s it.</div>
+            </div>
+          </label>
+        </div>
+
+        <div id="careDone" style="display:none" class="donepill">Nice. Good patient energy 😌✅</div>
+
+        <div class="btnrow">
+          <button class="btn secondary" id="back3">Back</button>
+          <button class="btn" id="next3" disabled>Next ☕</button>
+        </div>
+        <div class="hint">Tick all 3 to continue.</div>
+      </div>
+
+      <div class="step" id="s4">
+        <h1>Virtual Caffetto ☕✨</h1>
+        <p>Since you can’t have it for real… let’s do the cute version.</p>
+
+        <div class="note">
+          Tap <strong>Sip</strong> 3 times to “drink” it virtually 😝<br/>
+          (Real cold coffee token unlocks after you’re better.)
+        </div>
+
+        <div class="cupwrap">
+          <div class="cup" aria-label="virtual cup">
+            <div class="liquid" id="liquid"></div>
+            <div class="foam" id="foam"></div>
+            <label id="sipLabel">Sips: 0 / 3</label>
+          </div>
+          <div class="siprow">
+            <button class="sipbtn" id="sipBtn">Sip 😋</button>
+          </div>
+        </div>
+
+        <div class="btnrow">
+          <button class="btn secondary" id="back4">Back</button>
+          <button class="btn" id="next4" disabled>Unlock token 🎟️</button>
+        </div>
+        <div class="hint">Finish 3 sips to continue.</div>
+      </div>
+
+      <div class="step" id="s5">
+        <h1>Recovery reward unlocked 🏁</h1>
+        <p>I owe you the real thing: <strong>Cold Coffee from “The Caffetto”</strong> — redeemed only after you’re 100% ✅</p>
+
+        <div class="token">
+          <div><strong>Cold Coffee Token 🎟️</strong></div>
+          <div class="code" id="tokenCode">CAFFETTO‑SALONI‑SS</div>
+          <div class="small">Valid after recovery only. No negotiations 😤</div>
+          <div class="small">And yes… dessert not <em>desert</em> 😝 (brownie still pending).</div>
+        </div>
+
+        <div class="btnrow">
+          <button class="btn" id="waBtn">Send to Sameer on WhatsApp 💬</button>
+        </div>
+        <div class="hint">Tap it — it will open WhatsApp with your message pre‑filled.</div>
+
+        <div class="mini">Made with ❤️ by Sameer · for Saloni</div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const steps = ["s1","s2","s3","s4","s5"];
+    const bar = document.getElementById("bar");
+    let idx = 0;
+
+    function show(i){
+      idx = i;
+      steps.forEach((id, k)=> document.getElementById(id).classList.toggle("active", k===i));
+      bar.style.width = Math.round((i)/(steps.length-1)*100) + "%";
+      window.scrollTo({top:0, behavior:"smooth"});
+    }
+
+    document.getElementById("go1").addEventListener("click", ()=>{
+      fireConfetti(120);
+      show(1);
+    });
+
+    const hugBtn = document.getElementById("hugBtn");
+    const hugFill = document.getElementById("hugFill");
+    const hugMsg  = document.getElementById("hugMsg");
+    const next2 = document.getElementById("next2");
+    let hug = 0, holding = false, hugTimer = null;
+
+    function setHug(v){
+      hug = Math.max(0, Math.min(100, v));
+      hugFill.style.width = hug + "%";
+      hugMsg.textContent = "Hug meter: " + hug + "%";
+      if(hug >= 100){
+        next2.disabled = false;
+        hugMsg.textContent = "Hug meter: 100% — hugged 😌💗";
+      }
+    }
+    function startHold(){
+      if(holding) return;
+      holding = true;
+      hugTimer = setInterval(()=>{
+        setHug(hug + 2);
+        if(hug >= 100){
+          stopHold();
+          fireConfetti(80);
+        }
+      }, 35);
+    }
+    function stopHold(){
+      holding = false;
+      if(hugTimer) clearInterval(hugTimer);
+      hugTimer = null;
+    }
+
+    ["pointerdown","touchstart","mousedown"].forEach(ev=> hugBtn.addEventListener(ev, (e)=>{e.preventDefault(); startHold();}, {passive:false}));
+    ["pointerup","pointercancel","touchend","touchcancel","mouseup","mouseleave"].forEach(ev=> hugBtn.addEventListener(ev, (e)=>{e.preventDefault(); stopHold();}, {passive:false}));
+
+    document.getElementById("back2").addEventListener("click", ()=> show(0));
+    next2.addEventListener("click", ()=> show(2));
+
+    const careChecks = Array.from(document.querySelectorAll(".care"));
+    const next3 = document.getElementById("next3");
+    const careDone = document.getElementById("careDone");
+
+    function checkCare(){
+      const all = careChecks.every(c=>c.checked);
+      next3.disabled = !all;
+      careDone.style.display = all ? "inline-flex" : "none";
+      if(all) fireConfetti(70);
+    }
+    careChecks.forEach(c=> c.addEventListener("change", checkCare));
+    document.getElementById("back3").addEventListener("click", ()=> show(1));
+    next3.addEventListener("click", ()=> show(3));
+
+    let sips = 0;
+    const sipBtn = document.getElementById("sipBtn");
+    const sipLabel = document.getElementById("sipLabel");
+    const liquid = document.getElementById("liquid");
+    const foam = document.getElementById("foam");
+    const next4 = document.getElementById("next4");
+
+    function setCup(){
+      sipLabel.textContent = "Sips: " + sips + " / 3";
+      const heights = [62,45,28,12];
+      const h = heights[sips] ?? 12;
+      liquid.style.height = h + "%";
+      foam.style.bottom = "calc(14px + " + h + "% - 14px)";
+      foam.style.opacity = sips>=3 ? 0.35 : 0.8;
+      if(sips>=3){
+        sipBtn.disabled = true;
+        next4.disabled = false;
+        sipLabel.textContent = "Sips: 3 / 3 — cute 😝✅";
+      }
+    }
+    setCup();
+    sipBtn.addEventListener("click", ()=>{
+      if(sips>=3) return;
+      sips++;
+      setCup();
+      if(sips===3) fireConfetti(140);
+    });
+
+    document.getElementById("back4").addEventListener("click", ()=> show(2));
+    next4.addEventListener("click", ()=> { fireConfetti(220); show(4); });
+
+    function getCareSelected(){ return careChecks.filter(c=>c.checked).map(c=>c.value); }
+
+    document.getElementById("waBtn").addEventListener("click", ()=>{
+      const care = getCareSelected();
+      const msg =
+`Saloni’s Valentine Plan B ✅
+• Hug meter: 100% 🫂
+• Care plan: ${care.join(", ")}
+• Virtual Caffetto: 3/3 sips 😝☕
+Token: CAFFETTO‑SALONI‑SS (redeem after recovery ✅)
+
+PS: dessert not ‘desert’ 😝`;
+
+      const url = "https://wa.me/?text=" + encodeURIComponent(msg);
+      window.location.href = url;
+    });
+
+    const canvas = document.getElementById("confetti");
+    const ctx = canvas.getContext("2d");
+    let W=0,H=0;
+    function resize(){
+      W = canvas.width = window.innerWidth * devicePixelRatio;
+      H = canvas.height = window.innerHeight * devicePixelRatio;
+      canvas.style.width = window.innerWidth + "px";
+      canvas.style.height = window.innerHeight + "px";
+    }
+    window.addEventListener("resize", resize);
+    resize();
+
+    let particles = [];
+    function rand(a,b){ return a + Math.random()*(b-a); }
+    function fireConfetti(n=120){
+      const colors = ["#ff4fa3","#ff7abf","#ffd0e6","#18c56e","#ffd34d","#7aa6ff"];
+      for(let i=0;i<n;i++){
+        particles.push({
+          x: rand(0,W), y: rand(-H*0.1, 0),
+          vx: rand(-2.4, 2.4) * devicePixelRatio,
+          vy: rand(3.5, 7.5) * devicePixelRatio,
+          r: rand(2.2, 4.4) * devicePixelRatio,
+          a: rand(0, Math.PI*2), va: rand(-0.2, 0.2),
+          c: colors[Math.floor(Math.random()*colors.length)],
+          life: rand(55, 105)
+        });
+      }
+      if(particles.length>1400) particles = particles.slice(-1200);
+    }
+    function tick(){
+      ctx.clearRect(0,0,W,H);
+      particles.forEach(p=>{
+        p.x += p.vx; p.y += p.vy; p.a += p.va; p.vy += 0.03 * devicePixelRatio; p.life -= 1;
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.a);
+        ctx.fillStyle = p.c;
+        ctx.globalAlpha = Math.max(0, Math.min(1, p.life/80));
+        ctx.fillRect(-p.r, -p.r, p.r*2.2, p.r*1.2);
+        ctx.restore();
+      });
+      particles = particles.filter(p=> p.life>0 && p.y < H + 60*devicePixelRatio);
+      requestAnimationFrame(tick);
+    }
+    tick();
+  </script>
+</body>
+</html>
